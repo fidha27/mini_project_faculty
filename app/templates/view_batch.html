@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Batch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='faculty_dashboard.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Batch Details for Semester {{ semester }}</h1>
+        <nav>
+            <a href="{{ url_for('faculty_dashboard') }}">Back to Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="batch-info">
+            <h2>Batch Details</h2>
+            <p><strong>Semester:</strong> {{ semester }}</p>
+            <p><strong>Courses:</strong></p>
+            <ul>
+                {% for course in batch_details %}
+                <li>{{ course[0] }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="co-details">
+            <h2>Course Outcomes (COs)</h2>
+            {% if cos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>CO Number</th>
+                        <th>Description</th>
+                        <th>Bloom's Level</th>
+                        <th>Approval Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for co in cos %}
+                    <tr>
+                        <td>{{ co[0] }}</td>
+                        <td>{{ co[1] }}</td>
+                        <td>{{ co[2] }}</td>
+                        <td>{{ "Approved" if co[3] else "Pending" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No COs added yet.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

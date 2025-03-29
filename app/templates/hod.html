@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOD Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='hod.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo1.png') }}" alt="Logo" class="logo" height="65">
+        <div class="header-text">
+            <h1>Welcome <span id="hod-name">{{ hod_name }}</span></h1>
+            <h2 class="department-name">{{ department_name }}</h2>
+        </div>
+        <nav>
+            <div class="logout" onclick="logout()">
+                <i class="fas fa-power-off"></i>
+                <p>Logout</p>
+            </div>
+        </nav>
+    </header>
+    <aside id="sidebar">
+        <ul>
+            <li><a href="{{ url_for('hod_dashboard', hod_id=session['hod_id']) }}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('setth') }}"><i class="fas fa-chalkboard-teacher"></i> Set Threshold</a></li>
+            <li><a href="{{ url_for('mc_set') }}"><i class="fas fa-user-cog"></i> Map MC</a></li>
+            <li><a href="{{ url_for('advisor_set') }}"><i class="fas fa-user-cog"></i> Map Advisor</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <section class="hod-card">
+            <div class="hod-info">
+                <h2>HOD {{ hod_name }}</h2>
+            </div>
+        </section>
+
+        <section class="advisor-details">
+            <h1>Advisor Details</h1>
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th>Batch Name</th>
+                        <th>Name of Advisors</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set batch_dict = {} %}
+                    {% for advisor in result %}
+                        {% for batch in advisor.batches %}
+                            {% if batch not in batch_dict %}
+                                {% set _ = batch_dict.update({batch: []}) %}
+                            {% endif %}
+                            {% set _ = batch_dict[batch].append(advisor.name) %}
+                        {% endfor %}
+                    {% endfor %}
+        
+                    {% for batch, advisors in batch_dict.items() %}
+                        <tr>
+                            <td>{{ batch }}</td>
+                            <td>{{ ", ".join(advisors) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        
+    </main>
+
+    <script>
+        function logout() {
+            fetch("{{ url_for('logout') }}", {
+                method: 'GET',
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

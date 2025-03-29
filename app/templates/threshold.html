@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses Mapping</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='threshold.css') }}">
+    <script src="{{ url_for('static', filename='mc.js') }}"></script>
+
+</head>
+<body>
+    <header>
+        <h1>Add Thresholds</h1>
+        <a href="{{ url_for('index') }}">Back to Dashboard</a>
+    </header>
+    <main>
+      <section class="threshold-section">
+          <h2>Set Thresholds</h2>
+          <form action="{{ url_for('save_threshold') }}" method="POST">
+            
+            
+            <label for="internalThreshold">Internal Exam Threshold:</label>
+            <input type="number" id="internalThreshold" name="internalThreshold" min="0" max="100" required>
+    
+            <label for="externalThreshold">External Exam Threshold:</label>
+            <input type="number" id="externalThreshold" name="externalThreshold" min="0" max="100" required>
+    
+            <label for="external">External Exam Grade Threshold:</label>
+            <select id="external" name="external">
+                <option value="S">S</option>
+                <option value="A+">A+</option>
+                <option value="A">A</option>
+                <option value="B+">B+</option>
+                <option value="B">B</option>
+                <option value="C+">C+</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="P">P</option>
+                <option value="F">F</option>
+            </select>
+    
+            <button type="submit" class="save-btn">Save Thresholds</button>
+        </form>
+    
+      </section>
+  </main>

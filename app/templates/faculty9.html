@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO Attainment Generation</title>
+    <link rel="stylesheet" href="static/faculty9.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h1>CO Attainment Generation</h1>
+
+    <!-- Dropdown for Semester -->
+    <label for="semester">Select Semester:</label>
+    <select id="semester">
+        <option value="">-- Select Semester --</option>
+    </select>
+
+    <!-- Dropdown for Courses -->
+    <label for="course">Select Course:</label>
+    <select id="course">
+        <option value="">-- Select Course --</option>
+    </select>
+
+    <!-- Table to Display CO Attainment Values -->
+    <h2>CO Attainment Values</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>CO1</th>
+                <th>CO2</th>
+                <th>CO3</th>
+                <th>CO4</th>
+                <th>CO5</th>
+            </tr>
+        </thead>
+        <tbody id="co-attainment-body">
+            <tr><td colspan="5">Select a semester and course to view attainment</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function(){
+            // 🟢 Load semesters from DB
+            $.get("/get-semesters", function(data){
+                if(data.semesters){
+                    data.semesters.forEach(function(sem){
+                        $("#semester").append('<option value="' + sem + '">' + sem + '</option>');
+                    });
+                }
+            });
+        
+            // 🟢 Fetch courses when semester is selected
+            $("#semester").change(function(){
+                var semester = $(this).val();
+                $("#course").empty().append('<option value="">-- Select Course --</option>');
+                $("#co-attainment-body").html('<tr><td colspan="5">Select a semester and course to view attainment</td></tr>');
+        
+                if(semester){
+                    $.get("/get-cocourses", { semester: semester }, function(data){
+                        if(data.courses){
+                            data.courses.forEach(function(course){
+                                $("#course").append('<option value="' + course + '">' + course + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+        
+            // 🟢 Fetch CO Attainment when course is selected
+            $("#course").change(function(){
+                var semester = $("#semester").val();
+                var course = $(this).val();
+                $("#co-attainment-body").html('<tr><td colspan="5">Loading...</td></tr>');
+        
+                if(semester && course){
+                    $.get("/get-co-attainment", { semester: semester, course: course }, function(data){
+                        if(data.message){
+                            $("#co-attainment-body").html('<tr><td colspan="5">' + data.message + '</td></tr>');
+                        } else {
+                            var columns = Object.keys(data);  // Get CO names dynamically
+                            var tableHeader = "<tr>";
+                            columns.forEach(function(co) {
+                                tableHeader += "<th>" + co + "</th>";
+                            });
+                            tableHeader += "</tr>";
+        
+                            var tableRow = "<tr>";
+                            columns.forEach(function(co) {
+                                tableRow += "<td>" + data[co] + "</td>";
+                            });
+                            tableRow += "</tr>";
+        
+                            $("thead").html(tableHeader);
+                            $("#co-attainment-body").html(tableRow);
+                        }
+                    });
+                }
+            });
+        });
+        
+    </script>
+
+</body>
+</html>

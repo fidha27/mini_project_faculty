@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Coordinator</title>
+    <link rel="stylesheet" href="/static/mc.css">
+    <script src="/static/mc.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    
+<header>
+    
+    <img src="{{ url_for('static', filename='logo1.png') }}" alt="Logo" class="logo" height="65">
+    <h1>Module Coordinator</h1>
+    <a href="{{ url_for('index') }}" class="back-to-dashboard">Back to Dashboard</a>
+</header>
+
+<aside id="sidebar">
+    <ul>
+        <li><a href="{{url_for('faculty_dashboard')}}"><i class="fas fa-chalkboard-teacher"></i>Home</a></li>
+        <li><a href="{{ url_for('threshold_page') }}"><i class="fas fa-book"></i> Add Threshold</a></li>
+    </ul>
+</aside>
+
+<main>
+    <section class="co-requests">
+        <h1>CO Requests</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Faculty Name</th>
+                    <th>Course</th>
+                    <th>CO Description</th>
+                    <th>Suggested Threshold</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="requestsContainer">
+                {% for request in requests %}
+                <tr id="row-{{ request._id }}">  <!-- Added unique row ID -->
+                    <td>{{ request.faculty_pen_no }}</td>
+                    <td>{{ request.course_name }}</td>
+                    <td>{{ request.description }}</td>
+                    <td>
+                        <span id="weightage-{{ request._id }}">
+                            Threshold: {{ request.threshold if request.threshold else 'N/A' }}
+                        </span>
+                        <input type="number" id="input-weightage-{{ request._id }}" 
+                               value="{{ request.threshold if request.threshold else '' }}" 
+                               style="display:none;">
+                    </td>
+                    <td>
+                        <button class="approve-btn" data-id="{{ request._id }}">Approve</button>
+                        <button class="reject-btn" data-id="{{ request._id }}">Reject</button>
+                        <button class="edit-btn" id="edit-btn-{{ request._id }}" data-id="{{ request._id }}">Edit</button>
+                        <button class="save-btn" id="save-btn-{{ request._id }}" data-id="{{ request._id }}" style="display:none;">Save</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

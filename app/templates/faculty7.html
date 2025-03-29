@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Students</title>
+    <link rel="stylesheet" href="faculty7.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <ul>
+                <li><a href="#"><i class="fas fa-chart-line"></i> CO Attainment</a></li>
+                <li><a href="#"><i class="fas fa-calculator"></i> CO Calculation</a></li>
+                <li><a href="#"><i class="fas fa-tools"></i> Tool Selection</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <section class="batch-info">
+                <h2>Batch Details</h2>
+                <p><strong>Advisor Name:</strong> <span id="advisor-name">Loading...</span></p>
+                <p><strong>Batch Name:</strong> <span id="batch-name">Loading...</span></p>
+                <p><strong>Department:</strong> <span id="department">Loading...</span></p>
+            </section>
+
+            <section class="course-details">
+                <h2>Course Details</h2>
+                <p><strong>Course Name:</strong> <span id="course-name">Introduction to Computing</span></p>
+                <p><strong>Course Code:</strong> <span id="course-code">CS101</span></p>
+            </section>
+
+            <!-- CO Matrix Section -->
+            <section id="matrix-container" class="hidden">
+                <h2>CO-PO Correlation Matrix</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CO</th>
+                            <th>PO1</th>
+                            <th>PO2</th>
+                            <th>PO3</th>
+                            <th>PO4</th>
+                            <th>PO5</th>
+                            <th>PO6</th>
+                            <th>PO7</th>
+                            <th>PO8</th>
+                            <th>PO9</th>
+                            <th>PO10</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrix-body"></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='view_students.js') }}"></script>
+</body>
+</html>

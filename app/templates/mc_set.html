@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Assignment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo1.png') }}" alt="Logo" class="logo" height="65">
+        <div class="header-text">
+            <h1>Welcome <span id="hod-name">{{ hod_name }}</span></h1>
+            <h2 class="department-name">{{ department_name }}</h2>
+        </div>
+        <nav>
+            <div class="logout" onclick="logout()">
+                <i class="fas fa-power-off"></i>
+                <p>Logout</p>
+            </div>
+        </nav>
+    </header>
+    <aside id="sidebar">
+        <ul>
+            <li><a href="{{ url_for('hod_dashboard', hod_id=session['hod_id']) }}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('setth') }}"><i class="fas fa-chalkboard-teacher"></i> Set Threshold</a></li>
+            <li><a href="{{ url_for('mc_set') }}"><i class="fas fa-user-cog"></i> Map MC</a></li>
+            <li><a href="{{ url_for('advisor_set') }}"><i class="fas fa-user-cog"></i> Map Advisor</a></li>
+        </ul>
+    </aside>
+<main>
+    <div class="content-wrapper">
+    <h2>Assign Module Coordinator</h2>
+
+<label>Select Scheme:</label>
+<select id="schemeSelect">
+    {% for scheme in scheme_list %}
+        <option value="{{ scheme.schema_name }}">{{ scheme.schema_name }}</option>
+    {% endfor %}
+</select>
+
+<button id="fetchCoursesBtn">Fetch Courses</button>
+
+<h3>Select Courses:</h3>
+<div id="courseCheckboxContainer">
+    <p>Select a scheme first.</p> <!-- Placeholder text before loading courses -->
+</div>
+
+<label>Enter Module Name:</label>
+<input type="text" id="moduleName">
+
+<button id="addModuleBtn">Add Module</button>
+
+<h3>Assign Faculty to Modules</h3>
+
+<label>Select Module:</label>
+<select id="moduleList">
+    <option value="">Select a module first</option>
+</select>
+
+<label>Select Faculty:</label>
+<select id="facultySelect">
+    {% for faculty in faculty_list %}
+        <option value="{{ faculty._id }}">{{ faculty.name }} ({{ faculty.pen_no }})</option>
+    {% endfor %}
+</select>
+
+<button id="assignMCBtn">Assign MC</button>
+
+<h3>Current Module Coordinators</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Module</th>
+            <th>Courses</th>
+            <th>Coordinator</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="mcTableBody">
+        {% for module in module_list %}
+            <tr>
+                <td>{{ module.module_name }}</td>
+                <td>
+                    {% if module.course_codes %}
+                        {{ module.course_codes | join(", ") }}
+                    {% else %}
+                        No courses assigned
+                    {% endif %}
+                </td>
+                <td>{{ module.faculty }}</td>
+                <td>
+                    <button class="remove-mc-btn" data-id="{{ module._id }}">Remove</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</div>
+</main>    
+</table>
+
+
+    <script src="{{ url_for('static', filename='mc_set.js') }}"></script>
+
+</body>
+</html>
