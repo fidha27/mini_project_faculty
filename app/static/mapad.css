@@ -1,0 +1,268 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styles */
+header {
+    background-color: #1e588c;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+header h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.department-name {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+/* Sidebar Styling */
+#sidebar {
+    background-color: #fff;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 80px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 60px;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    margin: 15px 0;
+}
+
+#sidebar ul li a {
+    color: #1e588c;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#sidebar ul li a:hover {
+    background-color: #1e588c;
+    color: #fff;
+}
+
+/* Main Content Styling */
+main {
+    margin-left: 250px;
+    padding: 20px;
+    margin-top: 80px;
+}
+
+/* Section Headings */
+.section-heading {
+    color: #1e588c;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #1e588c;
+    color: #fff;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Buttons */
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Action Buttons */
+.edit-btn {
+    background-color: #1e588c;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #154267;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Add Button */
+.add-btn {
+    background-color: #17a2b8;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.add-btn:hover {
+    background-color: #138496;
+}
+
+/* Dropdowns */
+select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f4f4f9;
+    color: #333;
+    transition: border-color 0.3s;
+    width: 100%;
+}
+
+select:focus {
+    border-color: #1e588c;
+}
+
+.course-select {
+    height: 100px; /* For multi-select */
+}
+
+/* Hidden Elements */
+.hidden {
+    display: none;
+}
+
+/* Popup Styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.popup-content button {
+    background-color: #1e588c;
+    color: white;
+}
+
+.popup-content button:hover {
+    background-color: #154267;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-top: 20px;
+        margin-top: 0;
+    }
+
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .edit-btn,
+    .save-btn,
+    .delete-btn,
+    .add-btn {
+        width: 100%;
+    }
+
+    select {
+        width: 100%;
+    }
+}
